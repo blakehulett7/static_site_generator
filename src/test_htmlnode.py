@@ -1,6 +1,6 @@
 import unittest
 
-from htmlnode import HTMLNode
+from htmlnode import HTMLNode, LeafNode
 
 class TestHtmlNode(unittest.TestCase):
     def test_repr(self):
@@ -10,6 +10,27 @@ class TestHtmlNode(unittest.TestCase):
     def test_props_to_html(self):
         node = HTMLNode(props={"tk_1": "tv_1", "tk_2": "tv_2"})
         self.assertEqual(' tk_1="tv_1" tk_2="tv_2"', node.props_to_html())
+        
+class TestLeafNode(unittest.TestCase):
+    def test_constructor_defaults(self):
+        node = LeafNode(value="test_string")
+        self.assertEqual(repr(node), 'LeafNode(None, test_string, None, None)')
+        
+    def test_constructor_nochildren(self):
+        node = LeafNode(tag = "p", value="test_string", children = "a lot of them", props = {"href": "https://www.google.com"})
+        self.assertEqual(repr(node), "LeafNode(p, test_string, None, {'href': 'https://www.google.com'})")
+        
+    def test_to_html_notag(self):
+        node = LeafNode(value="test_string", props = {"href": "https://www.google.com"})
+        self.assertEqual(node.to_html(), "test_string")
+        
+    def test_to_html_noprops(self):
+        node = LeafNode(tag = "p", value="test_string")
+        self.assertEqual(node.to_html(), "<p>test_string</p>")
+        
+    def test_to_html(self):
+        node = LeafNode(tag = "a", value="test_string", children = "a lot of them", props = {"href": "https://www.google.com"})
+        self.assertEqual(node.to_html(), '<a href="https://www.google.com">test_string</a>')
         
 if __name__ == "__main__":
     unittest.main()
