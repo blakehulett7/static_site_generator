@@ -54,18 +54,3 @@ class ParentNode(HTMLNode):
             child_texts.append(child.to_html())
         children_string = "".join(child_texts)
         return f"<{self.tag}>{children_string}</{self.tag}>"
-
-
-node = ParentNode(
-    "p",
-    children=[
-        LeafNode("b", "Bold text"),
-        LeafNode(None, "Normal text"),
-        LeafNode("i", "italic text"),
-        LeafNode(None, "Normal text"),
-    ],
-)
-
-node2 = ParentNode("p", children=node)
-
-print(node2.to_html())

@@ -86,7 +86,7 @@ class TestParentNode(unittest.TestCase):
     def test_nested_parents(self):
         node = ParentNode(
             "p",
-            [
+            children=[
                 LeafNode("b", "Bold text"),
                 LeafNode(None, "Normal text"),
                 LeafNode("i", "italic text"),
@@ -94,7 +94,22 @@ class TestParentNode(unittest.TestCase):
             ],
         )
 
-        node2 = ParentNode("p", children=node)
+        node2 = ParentNode(
+            "p",
+            children=[
+                LeafNode(None, "Normal text"),
+                LeafNode("i", "italic text"),
+                LeafNode(None, "Normal text"),
+                LeafNode("b", "Bold text"),
+            ],
+        )
+
+        node3 = ParentNode("p", children=[node, node2])
+
+        self.assertEqual(
+            node3.to_html(),
+            "<p><p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p><p>Normal text<i>italic text</i>Normal text<b>Bold text</b></p></p>",
+        )
 
 
 if __name__ == "__main__":
