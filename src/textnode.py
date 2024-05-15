@@ -37,3 +37,23 @@ def textnode_to_htmlnode(textnode):
     return LeafNode(
         valid_tags[type_index], textnode.text, None, valid_props[type_index]
     )
+
+def split_nodes_delimiter(old_nodes, delimiter, text_type):
+    new_nodes = []
+    for node in old_nodes:
+        if node.text_type != "text":
+            new_nodes.append(node)
+    return new_nodes
+            
+old_nodes = [
+        TextNode("this is a **test** string.", "text"),
+        TextNode("**this is a weird test string**", "bold"),
+        TextNode("this **is** a test string.", "text")
+    ] 
+
+#TextNode("this is a *test* string.", "text"),
+#TextNode("this is a `test` string", "text", "christisking.com"),
+#TextNode("*this is a weird test string*", "italic")
+
+
+print(split_nodes_delimiter(old_nodes, "**", "bold"))

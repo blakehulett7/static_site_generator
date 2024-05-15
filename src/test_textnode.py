@@ -34,6 +34,14 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(
             "TextNode(This is a text node, bold, ChristisKing.com)", repr(node)
         )
+        
+    def test_split_function(self):
+        old_nodes = [
+                TextNode("this is a **test** string.", "text"),
+                TextNode("**this is a weird test string**", "bold"),
+                TextNode("this **is** a test string.", "text")
+        ]
+        
 
 
 if __name__ == "__main__":
