@@ -15,7 +15,7 @@ class TextNode:
         )
 
     def __repr__(self):
-        return f"TextNode({self.text}, {self.text_type}, {self.url})"
+        return f"TextNode('{self.text}', '{self.text_type}', {self.url})"
 
 
 def textnode_to_htmlnode(textnode):
@@ -62,15 +62,3 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
             
     return new_nodes
             
-old_nodes = [
-        TextNode("this is a **test** string.", "text"),
-        TextNode("**this is a weird test string**", "bold"),
-        TextNode("**this** is a test **string.**", "text")
-    ] 
-
-#TextNode("this is a *test* string.", "text"),
-#TextNode("this is a `test` string", "text", "christisking.com"),
-#TextNode("*this is a weird test string*", "italic")
-
-
-print(split_nodes_delimiter(old_nodes, "**", "bold"))
