@@ -43,12 +43,29 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
     for node in old_nodes:
         if node.text_type != "text":
             new_nodes.append(node)
+        elif node.text.count(delimiter) % 2:
+            raise Exception("invalid markdown syntax")        
+        else: 
+            node_list = node.text.split(delimiter)
+            text_list = node_list[::2]
+            special_list = node_list[1::2]
+            result_list = []
+            specialnode_list = []
+            for text in text_list:
+                result_list.append(TextNode(text, "text"))
+            for special in special_list:
+                specialnode_list.append(TextNode(special, text_type))
+            for special_node in specialnode_list:
+                result_list.insert(specialnode_list.index(special_node) * 2 + 1, special_node)
+            new_nodes.extend(result_list)
+            
+            
     return new_nodes
             
 old_nodes = [
         TextNode("this is a **test** string.", "text"),
         TextNode("**this is a weird test string**", "bold"),
-        TextNode("this **is** a test string.", "text")
+        TextNode("**this** is a test **string.**", "text")
     ] 
 
 #TextNode("this is a *test* string.", "text"),
