@@ -1,4 +1,4 @@
-from textnode import TextNode
+from textnode import TextNode, split_nodes_delimiter
 import re
 
 
@@ -22,6 +22,7 @@ def split_nodes_image(old_nodes):
         text = node.text
         if len(re_output) == 0:
             new_nodes.append(node)
+            continue
         for i in range(len(re_output)):
             image = re_output[i]
             split_text = text.split(f"![{image[0]}]({image[1]})", 1)
@@ -29,6 +30,8 @@ def split_nodes_image(old_nodes):
                 new_nodes.append(TextNode(split_text[0], "text"))
             new_nodes.append(TextNode(image[0], "image", image[1]))
             text = split_text[1]
+        if text != "":
+            new_nodes.append(TextNode(text, "text"))
     return new_nodes
 
 
@@ -48,19 +51,18 @@ def split_nodes_link(old_nodes):
             text = split_text[1]
     return new_nodes
 
+def text_to_textnodes(text):
+    node_list = split_nodes_delimiter([TextNode(node, "text")], "**", "bold")
+    node_list = split_nodes_delimiter(node_list, "*", "italic")
+    node_list = split_nodes_delimiter(node_list, "`", "code")
+    node_list = split_nodes_image(node_list)
+    return node_list
+    
 
-"""
-node = [
-    TextNode(
-        "This is text with an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another ![second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
-        "text",
-    ),
-    TextNode(
-        "This is text with a second ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another ![second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
-        "text",
-    ),
-    TextNode("This is text with no image", "text"),
-]
 
-print(split_nodes_image(node))
-"""
+
+node = "This is **text** with an *italic* word and a `code block` and an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and a [link](https://boot.dev)"
+
+
+print(text_to_textnodes(node))
+
