@@ -20,7 +20,7 @@ def split_nodes_image(old_nodes):
     for node in old_nodes:
         re_output = extract_markdown_images(node.text)
         text = node.text
-        if "!" not in text:
+        if len(re_output) == 0:
             new_nodes.append(node)
         for i in range(len(re_output)):
             image = re_output[i]
@@ -37,7 +37,7 @@ def split_nodes_link(old_nodes):
     for node in old_nodes:
         re_output = extract_markdown_links(node.text)
         text = node.text
-        if "[" not in text:
+        if len(re_output) == 0:
             new_nodes.append(node)
         for i in range(len(re_output)):
             link = re_output[i]
