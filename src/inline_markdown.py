@@ -32,9 +32,12 @@ def split_nodes_image(old_nodes):
                     continue
                 result_list.append(TextNode(string, "text"))
             else:
-                result_list.append(
-                    TextNode(re_output[i // 2][0], "image", re_output[i // 2][1])
-                )
+                try:
+                    result_list.append(
+                        TextNode(re_output[i // 2][0], "image", re_output[i // 2][1])
+                    )
+                except:
+                    raise ValueError("Invalid markdown syntax, image not closed.")
         new_nodes.append(result_list)
     return new_nodes
 
@@ -56,8 +59,28 @@ def split_nodes_link(old_nodes):
                     continue
                 result_list.append(TextNode(string, "text"))
             else:
-                result_list.append(
-                    TextNode(re_output[i // 2][0], "link", re_output[i // 2][1])
-                )
+                try:
+                    result_list.append(
+                        TextNode(re_output[i // 2][0], "link", re_output[i // 2][1])
+                    )
+                except:
+                    raise ValueError("Invalid markdown syntax, link not closed")
         new_nodes.append(result_list)
     return new_nodes
+
+
+"""
+node = [
+    TextNode(
+        "This is text with an [image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another [second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
+        "text",
+    ),
+    TextNode(
+        "This is text with a second [image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another [second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
+        "text",
+    ),
+    TextNode("This is text with no image", "text"),
+]
+
+print(split_nodes_link(node))
+"""
