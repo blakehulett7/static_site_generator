@@ -2,7 +2,7 @@ import unittest
 
 from textnode import TextNode
 
-from inline_markdown import split_nodes_image, split_nodes_link
+from inline_markdown import split_nodes_image, split_nodes_link, text_to_textnodes
 
 
 class TestMarkdown(unittest.TestCase):
@@ -88,3 +88,8 @@ class TestMarkdown(unittest.TestCase):
             TextNode("This is text with no link", "text", None),
         ]
         self.assertEqual(split_nodes_link(node), expected_output)
+
+    def test_text_to_textnodes(self):
+        text = "This is **text** with an *italic* word and a `code block` and an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and a [link](https://boot.dev)"
+        expected_output = [TextNode('This is ', 'text', None), TextNode('text', 'bold', None), TextNode(' with an ', 'text', None), TextNode('italic', 'italic', None), TextNode(' word and a ', 'text', None), TextNode('code block', 'code', None), TextNode(' and an ', 'text', None), TextNode('image', 'image', 'https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png'), TextNode(' and a ', 'text', None), TextNode('link', 'link', 'https://boot.dev')]
+        self.assertEqual(text_to_textnodes(text), expected_output)

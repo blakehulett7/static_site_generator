@@ -42,6 +42,7 @@ def split_nodes_link(old_nodes):
         text = node.text
         if len(re_output) == 0:
             new_nodes.append(node)
+            continue
         for i in range(len(re_output)):
             link = re_output[i]
             split_text = text.split(f"[{link[0]}]({link[1]})", 1)
@@ -49,6 +50,8 @@ def split_nodes_link(old_nodes):
                 new_nodes.append(TextNode(split_text[0], "text"))
             new_nodes.append(TextNode(link[0], "link", link[1]))
             text = split_text[1]
+        if text != "":
+            new_nodes.append(TextNode(text, "text"))
     return new_nodes
 
 def text_to_textnodes(text):
@@ -56,13 +59,14 @@ def text_to_textnodes(text):
     node_list = split_nodes_delimiter(node_list, "*", "italic")
     node_list = split_nodes_delimiter(node_list, "`", "code")
     node_list = split_nodes_image(node_list)
+    node_list = split_nodes_link(node_list)
     return node_list
     
 
 
-
-node = "This is **text** with an *italic* word and a `code block` and an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and a [link](https://boot.dev)"
+'''
+node = "This is **text** with an *italic* word and a `code block` and an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and a [link](https://boot.dev), then more text!"
 
 
 print(text_to_textnodes(node))
-
+'''
