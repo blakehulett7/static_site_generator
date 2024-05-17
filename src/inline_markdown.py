@@ -61,18 +61,3 @@ def split_nodes_link(old_nodes):
                 )
         new_nodes.append(result_list)
     return new_nodes
-
-
-node = [
-    TextNode(
-        "This is text with a linked [image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another [second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
-        "text",
-    ),
-    TextNode(
-        "This is text with a second [image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another [second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
-        "text",
-    ),
-    TextNode("This is text with no link", "text"),
-]
-new_nodes = split_nodes_link(node)
-print(new_nodes)
