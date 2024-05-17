@@ -19,11 +19,20 @@ def split_nodes_image(old_nodes):
     new_nodes = []
     for node in old_nodes:
         re_output = extract_markdown_images(node.text)
-        temp_list = node.text.split("!")
-        double_list = []
-        for str in temp_list:
-            double_list.append(str.split(")"))
-        final_list = flatten(double_list)
+        text = node.text
+        if "!" not in text:
+            new_nodes.append(node)
+        for i in range(len(re_output)):
+            image = re_output[i]
+            split_text = text.split(f"![{image[0]}]({image[1]})", 1)
+            if split_text[0] != "":
+                new_nodes.append(TextNode(split_text[0], "text"))
+            new_nodes.append(TextNode(image[0], "image", image[1]))
+            text = split_text[1]
+    return new_nodes
+
+
+"""    
         result_list = []
         for i in range(len(final_list)):
             string = final_list[i]
@@ -40,6 +49,7 @@ def split_nodes_image(old_nodes):
                     raise ValueError("Invalid markdown syntax, image not closed.")
         new_nodes.append(result_list)
     return new_nodes
+"""
 
 
 def split_nodes_link(old_nodes):
@@ -69,18 +79,16 @@ def split_nodes_link(old_nodes):
     return new_nodes
 
 
-"""
 node = [
     TextNode(
-        "This is text with an [image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another [second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
+        "This is text with an ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another ![second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
         "text",
     ),
     TextNode(
-        "This is text with a second [image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another [second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
+        "This is text with a second ![image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/zjjcJKZ.png) and another ![second image](https://storage.googleapis.com/qvault-webapp-dynamic-assets/course_assets/3elNhQu.png)",
         "text",
     ),
     TextNode("This is text with no image", "text"),
 ]
 
-print(split_nodes_link(node))
-"""
+print(split_nodes_image(node))
