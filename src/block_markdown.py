@@ -15,7 +15,7 @@ def block_to_block_type(block):
                 return "heading"
         raise ValueError("invalid syntax, too many headers")
     # Check if Code Block
-    if block.startswith("``` "):
+    if block.startswith("```"):
         if block.endswith("```"):
             return "code"
         raise ValueError("invalid syntax, close code block")
@@ -49,7 +49,9 @@ This is a paragraph of text. It has some **bold** and *italic* words inside of i
 - This is a list item
 * This is another list item
 
-``` Code Block ```
+```
+Code Block
+```
 
 > Quote 1
 >Quote 2
