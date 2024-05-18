@@ -33,13 +33,12 @@ def block_to_block_type(block):
         raise ValueError("invalid syntax, reformat unordered list block")
     # Check if Ordered List
     if block.startswith("1. "):
-        checklist = []
-        for i in range(len(lines)):
-            line = lines[i]
-            checklist.append(line.startswith(f"{i + 1}. "))
-        if all(checklist):
-            return "ordered_list"
-        raise ValueError("invalid syntax, reformat ordered list")
+        i = 1
+        for line in lines:
+            if not line.startswith(f"{i}. "):
+                raise ValueError("invalid syntax, reformat ordered list block")
+            i += 1
+        return "ordered_list"
     return "paragraph"
         
 
