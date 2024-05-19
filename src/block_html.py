@@ -40,10 +40,12 @@ print(block_to_htmlnode_heading("# Heading 1"))
 
 
 def block_to_htmlnode_code(block):
-    textnodes = text_to_textnodes(block.strip("``"))
+    textnodes = text_to_textnodes(block.strip("```"))
     leafnodes = []
     for textnode in textnodes:
         leafnodes.append(textnode_to_htmlnode(textnode))
+    for leafnode in leafnodes:
+        leafnode.tag = "code"
     return ParentNode("pre", None, leafnodes)
 
 
