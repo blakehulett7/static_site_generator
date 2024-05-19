@@ -6,6 +6,7 @@ def markdown_to_blocks(md_string):
             new_list.append(block.strip())
     return new_list
 
+
 def block_to_block_type(block):
     # Check if Heading Block
     if block.startswith("#"):
@@ -40,7 +41,7 @@ def block_to_block_type(block):
             i += 1
         return "ordered_list"
     return "paragraph"
-        
+
 
 md_string = """# This is a heading
 
@@ -72,3 +73,4 @@ block_list = markdown_to_blocks(md_string)
 for block in block_list:
     print(block_to_block_type(block))
 
+print(block_list)
