@@ -49,4 +49,35 @@ def block_to_htmlnode_code(block):
     return ParentNode("pre", None, leafnodes)
 
 
+"""
 print(block_to_htmlnode_code("```\ncode\n```"))
+"""
+
+
+def block_to_htmlnode_quote(block):
+    quote_list = block.split(">")
+    new_quotes = []
+    for quote in quote_list:
+        if quote != "":
+            new_quotes.append(quote.lstrip())
+    textnodes = text_to_textnodes("".join(new_quotes))
+    leafnodes = []
+    for textnode in textnodes:
+        leafnodes.append(textnode_to_htmlnode(textnode))
+    return ParentNode("blockquote", None, leafnodes)
+
+
+print(block_to_htmlnode_quote("> quote\n> more quote"))
+
+
+"""
+def block_to_htmlnode_unordered_list(block):
+    textnodes = text_to_textnodes(block.replace("> ", ""))
+    leafnodes = []
+    for textnode in textnodes:
+        leafnodes.append(textnode_to_htmlnode(textnode))
+    return leafnodes
+
+
+print(block_to_htmlnode_unordered_list("* list\n* items"))
+"""
