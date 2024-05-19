@@ -67,23 +67,24 @@ def block_to_htmlnode_quote(block):
     return ParentNode("blockquote", None, leafnodes)
 
 
-print(block_to_htmlnode_quote("> quote\n> more > quote"))
-
-
 """
+print(block_to_htmlnode_quote("> quote\n> more > quote"))
+"""
+
+
 def block_to_htmlnode_unordered_list(block):
     list_items = []
-    block_list = block.split("* ")
+    block_list = block.split("\n")
     for line in block_list:
-        if line != "":
-            list_items.append(line.strip("\n"))
-    return list_items
-    textnodes = text_to_textnodes(block.replace("> ", ""))
+        list_items.append("<li>" + line[2:] + "<li>")
+    new_block = "\n".join(list_items)
+    textnodes = text_to_textnodes(new_block)
     leafnodes = []
     for textnode in textnodes:
         leafnodes.append(textnode_to_htmlnode(textnode))
-    return leafnodes
+    return ParentNode("ul", None, leafnodes)
 
 
+"""
 print(block_to_htmlnode_unordered_list("* *italicized* list\n* **bolded** items"))
 """
