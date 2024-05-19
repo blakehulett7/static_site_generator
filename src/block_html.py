@@ -88,3 +88,21 @@ def block_to_htmlnode_unordered_list(block):
 """
 print(block_to_htmlnode_unordered_list("* *italicized* list\n* **bolded** items"))
 """
+
+
+def block_to_htmlnode_ordered_list(block):
+    list_items = []
+    block_list = block.split("\n")
+    for line in block_list:
+        list_items.append("<li>" + line[3:] + "<li>")
+    new_block = "\n".join(list_items)
+    textnodes = text_to_textnodes(new_block)
+    leafnodes = []
+    for textnode in textnodes:
+        leafnodes.append(textnode_to_htmlnode(textnode))
+    return ParentNode("ol", None, leafnodes)
+
+
+"""
+print(block_to_htmlnode_ordered_list("1. *italicized* list\n2. **bolded** items"))
+"""
