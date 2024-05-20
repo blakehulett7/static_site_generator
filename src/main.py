@@ -4,7 +4,8 @@ import shutil
 
 def main():
     static_to_public_copy()
-    md_file = open("./content/index.md")
+    with open("./content/index.md") as f:
+        md_file = f.read()
 
 
 def static_to_public_copy():
