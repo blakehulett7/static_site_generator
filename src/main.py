@@ -3,11 +3,7 @@ import shutil
 
 
 def main():
-    print(
-        directory_copy(
-            "/home/smirkin_blake/workspace/github.com/blakehulett7/staticsitegenerator/static"
-        )
-    )
+    static_to_public_copy()
 
 
 def static_to_public_copy():
@@ -19,23 +15,33 @@ def static_to_public_copy():
     if os.path.exists(public_directory):
         shutil.rmtree(public_directory)
     os.mkdir(public_directory)
-    directory_copy(static_directory)
+    directory_copy("")
 
 
-def directory_copy(directory_path):
+def directory_copy(relative_path):
     project_directory = (
         "/home/smirkin_blake/workspace/github.com/blakehulett7/staticsitegenerator"
     )
-    target_directory = f"{project_directory}/public"
-    directory_contents = os.listdir(directory_path)
-    copied_contents = []
-    for contents in directory_contents:
-        path = f"{directory_path}/{contents}"
-        if os.path.isfile(f"{directory_path}/{contents}"):
-            shutil.copy(path, public_directory)
+    static_directory = f"{project_directory}/static"
+    public_directory = f"{project_directory}/public"
+
+    if relative_path == "":
+        current_directory = static_directory
+        target_directory = public_directory
+    else:
+        current_directory = f"{project_directory}/static" + f"{relative_path}"
+        target_directory = f"{project_directory}/public" + f"{relative_path}"
+        print(f"Creating public{relative_path}")
+        os.mkdir(target_directory)
+
+    directory_contents = os.listdir(current_directory)
+    for content in directory_contents:
+        current_path = current_directory + "/" + content
+        if os.path.isfile(current_path):
+            print(f"copying static/{content} into public{relative_path}")
+            shutil.copy(current_path, target_directory)
         else:
-            copied_contents.append(directory_copy(path))
-    return copied_contents
+            directory_copy(relative_path + "/" + f"{content}")
 
 
 main()
