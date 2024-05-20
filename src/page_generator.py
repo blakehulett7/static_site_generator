@@ -25,10 +25,3 @@ def generate_page(from_path, template_path, dest_path):
     else:
         with open(dest_path, "x") as f:
             f.write(template_file)
-
-
-from_path = "./content/index.md"
-template_path = "./template.html"
-dest_path = "./public/index.html"
-
-generate_page(from_path, template_path, dest_path)
