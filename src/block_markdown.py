@@ -43,8 +43,8 @@ def block_to_block_type(block):
     return "paragraph"
 
 
-md_string = """# This is a heading
-
+# md_string = """# This is a heading
+"""
 This is a paragraph of text. It has some **bold** and *italic* words inside of it.
 
 - This is a list item
@@ -65,7 +65,7 @@ Code Block
 5. list item
 
 . Another paragraph block, this one strange
-"""
+
 
 block_list = markdown_to_blocks(md_string)
 
@@ -74,3 +74,4 @@ for block in block_list:
     print(block_to_block_type(block))
 
 print(block_list)
+"""
