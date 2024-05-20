@@ -4,6 +4,7 @@ import shutil
 
 def main():
     static_to_public_copy()
+    md_file = open("./content/index.md")
 
 
 def static_to_public_copy():
@@ -42,6 +43,12 @@ def directory_copy(relative_path):
             shutil.copy(current_path, target_directory)
         else:
             directory_copy(relative_path + "/" + f"{content}")
+
+
+def extract_title(markdown_file):
+    if not markdown_file.startswith("# "):
+        raise Exception("Invalid markdown: Add a top level header")
+    return markdown_file.split("\n")[0].lstrip("# ")
 
 
 main()
