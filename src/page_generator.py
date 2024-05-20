@@ -1,5 +1,6 @@
 import shutil
 import os
+import pathlib
 from md_html import md_to_htmlnode
 
 
@@ -25,3 +26,26 @@ def generate_page(from_path, template_path, dest_path):
     else:
         with open(dest_path, "x") as f:
             f.write(template_file)
+
+
+def generate_pages_recursive(src_dir_path, template_path, dest_dir_path):
+    src_dir_list = os.listdir(src_dir_path)
+    for file in src_dir_list:
+        extension = pathlib.PurePath(file).suffix
+        current_path = src_dir_path + "/" + file
+        if extension == ".md":
+            html_file = file.strip(extension) + ".html"
+            dest_path = dest_dir_path + "/" + html_file
+            generate_page(current_path, template_path, dest_path)
+        elif not os.path.isfile(current_path):
+            new_dest_dir_path = dest_dir_path + "/" + file
+            os.mkdir(new_dest_dir_path)
+            generate_pages_recursive(current_path, template_path, new_dest_dir_path)
+
+
+"""
+content_dir = "./content"
+template = "./template.html"
+public_dir = "./public"
+generate_pages_recursive(content_dir, template, public_dir)
+"""
