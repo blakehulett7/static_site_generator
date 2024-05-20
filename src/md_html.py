@@ -18,8 +18,8 @@ def md_to_htmlnode(markdown_document):
     nodes = []
     for block in blocks:
         block_type = block_types[blocks.index(block)]
-        func = f"block_to_htmlnode_{block_type}(str({block}))"
-        node = exec(func)
+        func = f"block_to_htmlnode_{block_type}(block)"
+        node = eval(func)
         nodes.append(node)
     return nodes
 
