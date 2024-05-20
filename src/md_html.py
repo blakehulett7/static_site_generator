@@ -21,7 +21,7 @@ def md_to_htmlnode(markdown_document):
         func = f"block_to_htmlnode_{block_type}(block)"
         node = eval(func)
         nodes.append(node)
-    return nodes
+    return ParentNode("div", None, nodes)
 
 
 md_string = """# This is a **bold** heading
