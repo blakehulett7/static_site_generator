@@ -76,7 +76,7 @@ def block_to_htmlnode_unordered_list(block):
     list_items = []
     block_list = block.split("\n")
     for line in block_list:
-        list_items.append("<li>" + line[2:])
+        list_items.append("<li>" + line[2:] + "</li>")
     new_block = "\n".join(list_items)
     textnodes = text_to_textnodes(new_block)
     leafnodes = []
@@ -94,7 +94,7 @@ def block_to_htmlnode_ordered_list(block):
     list_items = []
     block_list = block.split("\n")
     for line in block_list:
-        list_items.append("<li>" + line[3:])
+        list_items.append("<li>" + line[3:] + "</li>")
     new_block = "\n".join(list_items)
     textnodes = text_to_textnodes(new_block)
     leafnodes = []
