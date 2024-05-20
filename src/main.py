@@ -29,8 +29,8 @@ def directory_copy(relative_path):
         current_directory = static_directory
         target_directory = public_directory
     else:
-        current_directory = f"{project_directory}/static" + f"{relative_path}"
-        target_directory = f"{project_directory}/public" + f"{relative_path}"
+        current_directory = static_directory + f"{relative_path}"
+        target_directory = public_directory + f"{relative_path}"
         print(f"Creating public{relative_path}")
         os.mkdir(target_directory)
 
